@@ -1,0 +1,5 @@
+# VS Code settings:
+/.vscode
+
+# External Modules:
+/node_modules
