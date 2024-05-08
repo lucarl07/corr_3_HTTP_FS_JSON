@@ -1,4 +1,4 @@
-/** writeRecipeData | by lucarl07 **/
+/** Module: writeRecipeData **/
 
 // Native modules:
 import fs from "node:fs";

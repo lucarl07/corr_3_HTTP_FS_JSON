@@ -1,4 +1,4 @@
-/** readRecipeData | by lucarl07 **/
+/** Module: readRecipeData **/
 
 // Native modules:
 import fs from "node:fs";
