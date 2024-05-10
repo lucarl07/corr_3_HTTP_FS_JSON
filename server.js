@@ -152,7 +152,7 @@ const server = createServer((req, res) => {
     console.log(`${method} ${url}`)
 
     const urlParams = new URLSearchParams(url.split('?')[1])
-    const term = urlParams.get('termo')
+    const term = urlParams.get('termo').toLowerCase()
     console.log(`Term: ${term}`)
 
     readRecipeData((err, data) => {
@@ -163,9 +163,9 @@ const server = createServer((req, res) => {
       }
 
       const searchResult = data.filter((recipe) => 
-        recipe.nome.includes(term) ||
-        recipe.categoria.includes(term) ||
-        recipe.ingredientes.some((ing) => ing.includes(term))
+        recipe.nome.toLowerCase().includes(term) ||
+        recipe.categoria.toLowerCase().includes(term) ||
+        recipe.ingredientes.some((ing) => ing.toLowerCase().includes(term))
       );
 
       if (searchResult.length === 0) {
