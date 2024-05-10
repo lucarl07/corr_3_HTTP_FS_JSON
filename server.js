@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { createServer } from "http";
 import { URLSearchParams } from "url";
 import readRecipeData from "./readRecipeData.js";
@@ -41,7 +42,7 @@ const server = createServer((req, res) => {
           mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
         }, 'An error ocurred while reading server data.');
 
-        newRecipe.id = recipes.length + 1
+        newRecipe.id = uuidv4();
         recipes.push(newRecipe);
 
         writeRecipeData(recipes, (err) => {
@@ -57,7 +58,7 @@ const server = createServer((req, res) => {
   } else if (method === 'PUT' && url.startsWith('/receitas/')) { // Update an existing recipe
     console.log(`${method} ${url}`)
 
-    const id = parseInt(url.split('/')[2])
+    const id = url.split('/')[2]
     console.log(`ID: ${id}`)
 
     let body = '';
@@ -96,7 +97,7 @@ const server = createServer((req, res) => {
   } else if (method === 'DELETE' && url.startsWith('/receitas/')) { // Delete recipe
     console.log(`${method} ${url}`)
 
-    const id = parseInt(url.split('/')[2])
+    const id = url.split('/')[2]
     console.log(`ID: ${id}`)
 
     readRecipeData((err, recipes) => {

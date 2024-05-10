@@ -14,7 +14,7 @@
       "Sal e pimenta a gosto"
     ],
     "modo de preparo": "Refogue a cebola e o alho em um pouco de azeite. Adicione o arroz arbóreo e mexa por alguns minutos. Acrescente o vinho branco e deixe evaporar. Hidrate o funghi secchi em água quente por 15 minutos, escorra e pique. Adicione o funghi ao risoto e vá adicionando o caldo de legumes aos poucos, mexendo sempre, até o arroz estar cozido. Misture a manteiga e o queijo parmesão. Sirva quente, salpicado com mais queijo parmesão.",
-    "id": 1
+    "id": "d36066b8-6f94-44be-bd3f-8552efd0aa37"
   },
   {
     "nome": "Pavê de Chocolate",
@@ -28,6 +28,19 @@
       "Cacau em pó para polvilhar"
     ],
     "modo de preparo": "Derreta o chocolate meio amargo em banho-maria e misture com o creme de leite. Em um refratário, faça camadas alternadas de biscoito champanhe umedecidas no leite e creme de chocolate. Leve à geladeira por algumas horas. Antes de servir, polvilhe cacau em pó por cima.",
-    "id": 2
+    "id": "c0353eba-486f-43d3-a858-2ff9c49899d8"
+  },
+  {
+    "nome": "Salada Caesar",
+    "categoria": "Saladas",
+    "ingredientes": [
+      "Alface romana",
+      "Croutons",
+      "Parmesão em lascas",
+      "Peito de frango grelhado",
+      "Molho Caesar"
+    ],
+    "modo de preparo": "Lave e rasgue as folhas de alface romana. Grelhe o peito de frango e corte em tiras. Prepare o molho Caesar misturando maionese, mostarda, suco de limão, alho picado, anchovas esmagadas, azeite, sal e pimenta. Misture as folhas de alface, o frango grelhado, os croutons e as lascas de parmesão. Regue com o molho Caesar e sirva.",
+    "id": "d16805b9-9c81-4f20-86af-b10f476baeac"
   }
 ]
