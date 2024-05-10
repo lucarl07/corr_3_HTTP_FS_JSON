@@ -130,8 +130,22 @@ const server = createServer((req, res) => {
     console.log(`${method} ${url}`)
   } else if (method === 'GET' && url.startsWith('/busca')) { // Search a recipe by terms
     console.log(`${method} ${url}`)
-  } else if (method === 'GET' && url === '/ingredientes') { // Get a list of ingredients
+  } else if (method === 'GET' && url === '/listar_ingredientes') { // Get a list of ingredients
     console.log(`${method} ${url}`)
+
+    readRecipeData((error, recipes) => {
+      if (error) writeResponse(500, { 
+        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+      }, 'An error ocurred while reading server data.');
+
+      let ingredients = [];
+
+      recipes.forEach(recipe => {
+        ingredients.push(...recipe.ingredientes)
+      });
+
+      writeResponse(200, ingredients)
+    })
   } else { // No endpoint matched
     writeResponse(404, {
       mensagem: "Página não encontrada. Por favor, verifique a URL e o método HTTP utilizado."
