@@ -130,6 +130,52 @@ const server = createServer((req, res) => {
     console.log(`${method} ${url}`)
   } else if (method === 'GET' && url.startsWith('/busca')) { // Search a recipe by terms
     console.log(`${method} ${url}`)
+
+    const urlParams = new URLSearchParams(url.split('?')[1])
+    const term = urlParams.get('termo')
+    console.log(`Term: ${term}`)
+
+    readRecipeData((err, data) => {
+      if (err) {
+        return writeResponse(500, { 
+          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+        }, 'An error ocurred while reading server data.');
+      }
+
+      const searchResult = data.filter((recipe) => 
+        recipe.nome.includes(term) ||
+        recipe.categoria.includes(term) ||
+        recipe.ingredientes.some((ing) => ing.includes(term))
+      );
+
+      if (searchResult.length === 0) {
+        return writeResponse(404, {
+          message: `Não foi encontrada nenhuma receita com o termo ${term}.`
+        }, 'Recipe not found.');
+      }
+
+      writeResponse(200, searchResult)
+    })
+
+  } else if (method === 'GET' && url.startsWith('/ingredientes/')) { // Search a recipe by ingredients
+    console.log(`${method} ${url}`)
+
+    const ingredient = url.split('/')[2];
+    console.log(`Ingredient: ${ingredient}`)
+
+    readRecipeData((error, data) => {
+      if (error) writeResponse(500, { 
+        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+      }, 'An error ocurred while reading server data.');
+
+      const recipesWithIng = data.filter(recipe => {
+        recipe.ingredientes.some((ing) => ing.includes(ingredient))
+      })
+
+      console.log(recipesWithIng)
+      rec.end()
+    })
+
   } else if (method === 'GET' && url === '/listar_ingredientes') { // Get a list of ingredients
     console.log(`${method} ${url}`)
 
