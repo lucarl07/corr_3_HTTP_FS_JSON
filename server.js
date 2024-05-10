@@ -22,9 +22,11 @@ const server = createServer((req, res) => {
     console.log(`${method} ${url}`)
 
     readRecipeData((error, recipes) => {
-      if (error) writeResponse(500, { 
-        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-      }, 'An error ocurred while reading server data.');
+      if (error) {
+        return writeResponse(500, { 
+          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+        }, 'An error ocurred while reading server data.');
+      }
 
       writeResponse(200, recipes)
     });
@@ -38,17 +40,21 @@ const server = createServer((req, res) => {
       const newRecipe = JSON.parse(body)
 
       readRecipeData((err, recipes) => {
-        if (err) writeResponse(500, { 
-          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-        }, 'An error ocurred while reading server data.');
+        if (err) {
+          return writeResponse(500, { 
+            mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+          }, 'An error ocurred while reading server data.');
+        }
 
         newRecipe.id = uuidv4();
         recipes.push(newRecipe);
 
         writeRecipeData(recipes, (err) => {
-          if (err) writeResponse(500, { 
-            mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-          }, 'An error ocurred while reading server data.');
+          if (err) {
+            return writeResponse(500, { 
+              mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+            }, 'An error ocurred while reading server data.');
+          }
 
           writeResponse(201, newRecipe)
         });
@@ -67,27 +73,35 @@ const server = createServer((req, res) => {
     req.on('end', () => {
       const updtRecipe = JSON.parse(body)
 
-      if (!body) writeResponse(400, {
-        message: "O corpo da solicitação está vazio. Por favor, preencha-o com dados."
-      }, 'Bad Request: empty body returned.');
+      if (!body) {
+        return writeResponse(400, {
+          message: "O corpo da solicitação está vazio. Por favor, preencha-o com dados."
+        }, 'Bad Request: empty body returned.');
+      }
 
       readRecipeData((err, recipes) => {
-        if (err) writeResponse(500, { 
-          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-        }, 'An error ocurred while reading server data.');
+        if (err) {
+          writeResponse(500, { 
+            mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+          }, 'An error ocurred while reading server data.');
+        }
 
         const index = recipes.findIndex(item => item.id === id);
 
-        if (index === -1) writeResponse(404, { 
-          mensagem: "Receita não encontrada. Por favor, verifique a ID inserida." 
-        }, 'Recipe not found.');
+        if (index === -1) {
+          return writeResponse(404, { 
+            mensagem: "Receita não encontrada. Por favor, verifique a ID inserida." 
+          }, 'Recipe not found.');
+        }
 
         recipes[index] = {...updtRecipe, id: id}
 
         writeRecipeData(recipes, (err) => {
-          if (err) writeResponse(500, { 
-            mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-          }, 'An error ocurred while reading server data.');
+          if (err) {
+            return writeResponse(500, { 
+              mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+            }, 'An error ocurred while reading server data.');
+          }
 
           writeResponse(201, recipes[index])
         });
@@ -101,22 +115,28 @@ const server = createServer((req, res) => {
     console.log(`ID: ${id}`)
 
     readRecipeData((err, recipes) => {
-      if (err) writeResponse(500, { 
-        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-      }, 'An error ocurred while reading server data.');
+      if (err) {
+        return writeResponse(500, { 
+          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+        }, 'An error ocurred while reading server data.');
+      }
 
       const index = recipes.findIndex(item => item.id === id);
 
-      if (index === -1) writeResponse(404, { 
-        mensagem: "Receita não encontrada. Por favor, verifique a ID inserida." 
-      }, 'Recipe not found. It never existed, it seems...');
+      if (index === -1) {
+        return writeResponse(404, { 
+          mensagem: "Receita não encontrada. Por favor, verifique a ID inserida." 
+        }, 'Recipe not found. It never existed, it seems...');
+      }
 
       recipes.splice(index, 1)
 
       writeRecipeData(recipes, (err) => {
-        if (err) writeResponse(500, { 
-          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-        }, 'An error ocurred while reading server data.');
+        if (err) {
+          return writeResponse(500, { 
+            mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+          }, 'An error ocurred while reading server data.');
+        }
 
         writeResponse(201, {
           mensagem: `Receita ID: ${id} apagada com sucesso.`,
@@ -164,9 +184,11 @@ const server = createServer((req, res) => {
     console.log(`Ingredient: ${ingredient}`)
 
     readRecipeData((error, data) => {
-      if (error) writeResponse(500, { 
-        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-      }, 'An error ocurred while reading server data.');
+      if (error) {
+        return writeResponse(500, { 
+          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+        }, 'An error ocurred while reading server data.');
+      }
 
       const recipesWithIng = data.filter(recipe => {
         recipe.ingredientes.some((ing) => ing.includes(ingredient))
@@ -180,9 +202,11 @@ const server = createServer((req, res) => {
     console.log(`${method} ${url}`)
 
     readRecipeData((error, recipes) => {
-      if (error) writeResponse(500, { 
-        mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
-      }, 'An error ocurred while reading server data.');
+      if (error) {
+        return writeResponse(500, { 
+          mensagem: "Erro ao ler os dados. Por favor, tente novamente." 
+        }, 'An error ocurred while reading server data.');
+      }
 
       let ingredients = [];
 
